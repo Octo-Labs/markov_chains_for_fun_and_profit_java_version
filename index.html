@@ -57,10 +57,124 @@
           </blockquote>
         </section>
 
+ <section>
+  <table border="0" class="vert-middle" width="100%">
+    <tr>
+      <td colspan="2">
+        <h3>About me</h3>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h3>Jeremy Green - Consultant</h3>
+      </td>
+    </tr>
+    <tr class="">
+      <td>
+        <img src="images/octologo.png" class="no-border">
+      </td>
+      <td>
+        @jagthedrummer <br />
+        jeremy@octolabs.com <br />
+        <a href="http://www.octolabs.com/">http://www.octolabs.com/</a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br/>
+        <h4 class="fragmentno fade-in">Things I Enjoy : Dopamine, Serotonin</h4>
+        <h4 class="fragmentno fade-in">Other Interests : Drumming, Photography, and Brewing</h4>
+        <!--h4 class="fragment fade-in">okc dev community enthusiast - okcruby.org, okcjs.org</h4-->
+      </td>
+    </tr>
+    
+  </table>
+  <aside class="notes">
+    These items are in chronological order.<br />
+    I've been drumming much more than half my life.<br />
+    Coding, just about half.<br />
+    * next fragment * <br />
+    Thanks to Jesse and Vance of okcjs for organizing Thunder Plains.
+    * next fragment * <br />
+    I'm historically bad at Twitter, but trying to get better.<br />
+    Contacting me through OctoLabs is more reliable.
+  </aside>
+</section>
+
+
+        <section>
+          <h1>What are Markov Chains?</h1>
+        </section>
+
+        <section>
+          <h2>According to WikiPedia</h2>
+
+          <h3>"A Markov Chain is a random process that undergoes transitions from one state to another on a state space"</h3>
+        </section>
+
+        <section>
+          <h2>State Machines</h2>
+
+          <h2>Behaving Randomly</h2>
+
+          <img src="images/markov_chain.jpg" class="no-border"/>
+        </section>
+
+        <section>
+          <h1>Deterministic State Machines</h1>
+        </section>
+
+        <section>
+          <img src="images/orders.png"/>
+        </section>
+
+        <section>
+          <h2>Markov Chains are<br/>Non-Deterministic</h2>
+          <h3>"memoryless"</h3>
+        </section>
+
+        <section>
+          <h2>Applications for<br/>Markov Chains</h2>
+        </section>
+
+        <section>
+          <h2>Moods</h2>
+          <img src="images/moods.gif"/>
+        </section>
+
+        <section>
+          <h2>Stocks</h2>
+          <img src="images/stocks.png"/>
+        </section>
+
+        <section>
+          <h2>Weather</h2>
+          <img src="images/weather.png"/>
+        </section>
+
+        <section>
+          <h2>Complex</h2>
+          <img src="images/complex.png"/>
+        </section>
+
+        <section>
+          <h2>Text processing</h2>
+
+          <blockquote>
+            "George Lucas doesn't have the duty to do good."
+            <br/><br/>
+            - PopeFranFordCoppola <a href="http://twitter.com/PopeFranFordCop">@PopeFranFordCop</a>
+          </blockquote>
+
+        </section>
 
         <section>
           <h1>Quote Masher</h1>
           <a href="http://quote-masher.herokuapp.com">quote-masher.herokuapp.com</a>
+        </section> 
+
+        <section>
+          <h2>An Example Deconstructed</h2>
         </section>
 
         <section>
@@ -93,8 +207,97 @@
         <section>
           <h2>Probability Function</h2>
           <img src="markov3.png"/>
+          <code>rand(next_words.size)</code>
         </section>
 
+        <section>
+          <h2>How would you code this?</h2>
+        </section>
+
+        <section>
+          <h2>Starting with tests, of course!</h2>
+        </section>
+
+        <section>
+<pre><code>
+  RSpec.describe MarkovChainer do
+    before :each do
+      @chainer = MarkovChainer.new
+    end
+    # ...
+  end
+
+</code></pre>
+        </section>
+
+        <section>
+<pre><code>
+  RSpec.describe MarkovChainer do
+    # ...
+    describe "#train" do
+      it "should accept a sentence" do
+        expect {
+          @chainer.train("This is a test message")
+        }.to_not raise_error
+      end
+    end
+    #...
+  end
+
+</code></pre>
+        </section>
+
+        <section>
+<pre><code>
+  RSpec.describe MarkovChainer do
+    #...
+    describe "#generate with one sentece" do
+      it "should return the original sentence" do
+        @sentence = "This should come back un-changed."
+        @chainer.train(@sentence)
+        expect(@chainer.generate).to eq(@sentence)
+      end
+    end
+    #...
+  end
+
+</code></pre>
+        </section>
+
+        <section>
+<pre><code>
+  RSpec.describe MarkovChainer do
+    describe "#generate with two sentences" do
+      it "should mix the sentences" do
+        @chainer.train("Rob loves Ruby")
+        @chainer.train("Jesse loves Javascript")
+        results = {}
+        20.times do
+          new_sentence = @chainer.generate
+          results[new_sentence] ||= 0
+          results[new_sentence] += 1
+        end
+        puts results
+        expect(results["Rob loves Javascript"]).to be > 0
+      end
+    end
+  end
+
+</code></pre>
+        </section>
+
+        <section>
+<pre><code>
+  # results
+  {
+    "Jesse loves Ruby" => 7,
+    "Rob loves Ruby" => 5,
+    "Rob loves Javascript" => 4,
+    "Jesse loves Javascript" => 4
+  }
+
+</code></pre>
+        </section>
 
         <section>
           <h2>Quote Masher<br/>Admin Demo</h2>
@@ -191,13 +394,7 @@
           </blockquote>
         </section>
 
-        <section>
-          <blockquote>
-            "George Lucas doesn't have the duty to do good."
-            <br/><br/>
-            - PopeFranFordCoppola <a href="http://twitter.com/PopeFranFordCop">@PopeFranFordCop</a>
-          </blockquote>
-        </section>
+        
 
         <section>
           <blockquote>

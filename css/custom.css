@@ -42,3 +42,8 @@
   margin-left:auto !important;
 }
 
+table.vert-middle td{
+  vertical-align:middle;
+  border-bottom:0px;
+}
+
