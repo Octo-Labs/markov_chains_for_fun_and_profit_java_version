@@ -101,6 +101,11 @@
   </aside>
 </section>
 
+        <section>
+          <h1>Quote Masher</h1>
+          <a href="http://quote-masher.herokuapp.com">quote-masher.herokuapp.com</a>
+        </section>
+
 
         <section>
           <h1>What are Markov Chains?</h1>
@@ -129,8 +134,9 @@
         </section>
 
         <section>
-          <h2>Markov Chains are<br/>Non-Deterministic</h2>
+          <h3>Markov Chains are Non-Deterministic</h3>
           <h3>"memoryless"</h3>
+          <img src="images/markov_chain.jpg" class="no-border"/>
         </section>
 
         <section>
@@ -138,22 +144,26 @@
         </section>
 
         <section>
-          <h2>Moods</h2>
+          <img src="images/applications.png" class="no-border" style="max-height:600px"/>
+        </section>
+
+        <section>
+          <h2>Simulating Moods</h2>
           <img src="images/moods.gif"/>
         </section>
 
         <section>
-          <h2>Stocks</h2>
+          <h2>Simulating Stocks</h2>
           <img src="images/stocks.png"/>
         </section>
 
         <section>
-          <h2>Weather</h2>
+          <h2>Simulating Weather</h2>
           <img src="images/weather.png"/>
         </section>
 
         <section>
-          <h2>Complex</h2>
+          <h2>Complex Chains</h2>
           <img src="images/complex.png"/>
         </section>
 
@@ -168,10 +178,7 @@
 
         </section>
 
-        <section>
-          <h1>Quote Masher</h1>
-          <a href="http://quote-masher.herokuapp.com">quote-masher.herokuapp.com</a>
-        </section> 
+         
 
         <section>
           <h2>An Example Deconstructed</h2>
@@ -207,8 +214,21 @@
         <section>
           <h2>Probability Function</h2>
           <img src="markov3.png"/>
-          <code>rand(next_words.size)</code>
+          <code>rand(2)</code>
         </section>
+
+        <section>
+          <h2>Choose your own adventure</h2>
+          <hr />
+
+          <h3>Quote Masher Admin Demo</h3>
+          <a href="http://quote-masher.herokuapp.com/admin/accounts">quote-masher.herokuapp.com</a>
+
+          <h2>OR</h2>
+
+          <h3>Let's see some code!</h3>
+        </section>
+
 
         <section>
           <h2>How would you code this?</h2>
@@ -219,7 +239,7 @@
         </section>
 
         <section>
-<pre><code>
+<pre><code class="ruby">
   RSpec.describe MarkovChainer do
     before :each do
       @chainer = MarkovChainer.new
@@ -231,7 +251,7 @@
         </section>
 
         <section>
-<pre><code>
+<pre><code class="ruby">
   RSpec.describe MarkovChainer do
     # ...
     describe "#train" do
@@ -248,7 +268,7 @@
         </section>
 
         <section>
-<pre><code>
+<pre><code class="ruby">
   RSpec.describe MarkovChainer do
     #...
     describe "#generate with one sentece" do
@@ -265,7 +285,7 @@
         </section>
 
         <section>
-<pre><code>
+<pre><code class="ruby">
   RSpec.describe MarkovChainer do
     describe "#generate with two sentences" do
       it "should mix the sentences" do
@@ -287,7 +307,7 @@
         </section>
 
         <section>
-<pre><code>
+<pre><code class="ruby">
   # results
   {
     "Jesse loves Ruby" => 7,
@@ -297,6 +317,10 @@
   }
 
 </code></pre>
+        </section>
+
+        <section>
+          <h1>Make with the live coding already!</h1>
         </section>
 
         <section>
