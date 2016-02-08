@@ -61,12 +61,12 @@
   <table border="0" class="vert-middle" width="100%">
     <tr>
       <td colspan="2">
-        <h3>About me</h3>
+        <h4>About me</h4>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <h3>Jeremy Green - Consultant</h3>
+        <h4>Jeremy Green - Consultant, Author, SaaS Guy, Techlahomer</h4>
       </td>
     </tr>
     <tr class="">
@@ -239,69 +239,113 @@
         </section>
 
         <section>
-<pre><code class="ruby">
-  RSpec.describe MarkovChainer do
-    before :each do
-      @chainer = MarkovChainer.new
-    end
-    # ...
-  end
+<pre><code class="plain">
+  Feature: Markov Chainer
+    As chainer
+    I need to take sentences for training
+    And combine them randomly
+    So that I can create comedy
+
+  Scenario: Accept a sentence for training
+    Given a MarkovChainer
+    Then it should be trainable
+
+
+</code></pre>
+        </section>
+  
+        <section>
+<pre><code class="java">
+  public class MarkovChainerStepDefs {
+    private MarkovChainer myChainer;
+
+    @Given("^a MarkovChainer$")
+    public void a_MarkovChainer() throws Throwable {
+      myChainer = new MarkovChainer();
+    }
+
+    @Then("^it should be trainable$")
+    public void it_should_be_trainable() throws Throwable {
+      String sentence = "Just a test sentence";
+      myChainer.train(sentence);
+    }
+  }
+
+</code></pre>
+        </section>
+
+
+        <section>
+<pre><code class="text">
+  Scenario: Regurgitating a sentence
+    Given a MarkovChainer
+    When I train it with "Heloooo there!"
+    Then it should generate "Heloooo there!"
 
 </code></pre>
         </section>
 
         <section>
-<pre><code class="ruby">
-  RSpec.describe MarkovChainer do
-    # ...
-    describe "#train" do
-      it "should accept a sentence" do
-        expect {
-          @chainer.train("This is a test message")
-        }.to_not raise_error
-      end
-    end
-    #...
-  end
+<pre><code class="text">
+  @When("^I train it with \"([^\"]*)\"$")
+  public void i_train_it_with(String arg1) throws Throwable {
+    myChainer.train(arg1);
+  }
+
+  @Then("^it should generate \"([^\"]*)\"$")
+  public void it_should_generate(String arg1) throws Throwable {
+    String sentence = myChainer.generate();
+    assertThat(sentence, is(arg1));
+  }
+
+</code></pre>
+        </section>
+
+
+        <section>
+<pre><code class="text">
+  Scenario: Mixing two sentences
+    Given a MarkovChainer
+    When I train it with "Ryan brews JAVA"
+    When I train it with "Jeremy brews beer"
+    And call generate 20 times
+    Then it should generate "Ryan brews beer" at least once
+
+</code></pre>
+        </section>
+
+
+        <section>
+<pre><code class="java">
+  private Hashtable&lt;String, Integer&gt; results = new Hashtable&lt;String, Integer&gt;();
+
+  @When("^call generate (\\d+) times$")
+  public void call_generate_times(int arg1) throws Throwable {
+    for(int i=1; i&lt;arg1; i++){
+      String sentence = myChainer.generate();
+      Integer score = results.get(sentence);
+      if(score == null){
+        score = 0;
+      }
+      score++;
+      results.put(sentence,score);
+    }
+  }
 
 </code></pre>
         </section>
 
         <section>
-<pre><code class="ruby">
-  RSpec.describe MarkovChainer do
-    #...
-    describe "#generate with one sentece" do
-      it "should return the original sentence" do
-        @sentence = "This should come back un-changed."
-        @chainer.train(@sentence)
-        expect(@chainer.generate).to eq(@sentence)
-      end
-    end
-    #...
-  end
-
-</code></pre>
-        </section>
-
-        <section>
-<pre><code class="ruby">
-  RSpec.describe MarkovChainer do
-    describe "#generate with two sentences" do
-      it "should mix the sentences" do
-        @chainer.train("Rob loves Ruby")
-        @chainer.train("Jesse loves Javascript")
-        results = {}
-        20.times do
-          new_sentence = @chainer.generate
-          results[new_sentence] ||= 0
-          results[new_sentence] += 1
-        end
-        puts results
-        expect(results["Rob loves Javascript"]).to be > 0
-      end
-    end
-  end
+<pre><code class="java">
+  @Then("^it should generate \"([^\"]*)\" at least once$")
+  public void it_should_generate_at_least_once(String arg1) throws Throwable {
+    Integer score = results.get(arg1);
+    if(score == null){
+        score = 0;
+    }
+    boolean greaterThanZero = score &gt; 0;
+    assertThat("greaterThanZero",greaterThanZero);
+  }
 
 </code></pre>
         </section>
@@ -310,14 +354,16 @@
 <pre><code class="ruby">
   # results
   {
-    "Jesse loves Ruby" => 7,
-    "Rob loves Ruby" => 5,
-    "Rob loves Javascript" => 4,
-    "Jesse loves Javascript" => 4
+    "Ryan brews JAVA" => 7,
+    "Jeremy brews beer" => 5,
+    "Ryan brews beer" => 4,
+    "Jeremy brews JAVA" => 4
   }
 
 </code></pre>
         </section>
+
+
 
         <section>
           <h1>Make with the live coding already!</h1>
