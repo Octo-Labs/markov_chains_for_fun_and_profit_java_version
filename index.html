@@ -369,6 +369,212 @@
           <h1>Make with the live coding already!</h1>
         </section>
 
+
+
+        <section>
+          <h3>Just a <code>train</code> method</h3>
+         <pre><code class="java">
+  public class MarkovChainer {
+    public void train(String s) { }
+  }
+
+</code></pre> 
+<h3>One passing scenario!</h3>
+        </section>
+
+        <section>
+          <h3>Regurgitating a sentence</h3>
+         <pre><code class="java">
+  public class MarkovChainer {
+    private String sentence;
+
+    public void train(String s) {
+      sentence = s;
+    }
+
+    public String generate() {
+      return sentence;
+    }
+  }
+
+</code></pre> 
+<h3>Two passing scenarios!</h3>
+        </section>
+
+        <section>
+          <h3>A simple linked list</h3>
+        </section>
+
+        <section>
+         <pre><code class="java">
+  private class Word {
+    private Word nextWord;
+    private String word;
+    public Word(String word, Word nextWord){
+      this.word = w;
+      this.nextWord = nextWord;
+    }
+
+    public Word nextWord(){
+      return nextWord;
+    }
+
+    public String toString(){
+      return word;
+    }
+  }
+
+</code></pre> 
+        </section>
+
+        <section>
+         <pre><code class="java">
+  private ArrayList&lt;Word&gt; beginnings;
+
+  public MarkovChainer(){
+    beginnings = new ArrayList&lt;Word&gt;();
+  }
+
+</code></pre> 
+        </section>
+
+        <section>
+         <pre><code class="java">
+  public void train(String s) {
+    String[] swords = s.split(" ");
+    Word previousWord = null;
+    for(int i = swords.length -1; i>=0; i--){
+      Word word = new Word(swords[i],previousWord);
+      previousWord = word;
+    }
+    beginnings.add(previousWord);
+  }
+
+</code></pre> 
+        </section>
+
+        <section>
+         <pre><code class="java">
+  public String generate() {
+    StringJoiner words = new StringJoiner(" ");
+    Word word = beginnings.get(0);
+    while(word != null){
+      words.add(word.toString());
+      word = word.nextWord();
+    }
+    String sentence = words.toString();
+    return sentence;
+  }
+
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Still only two passing scenarios...</h3>
+          <h1>:(</h1>
+        </section>
+
+        <section>
+         <pre><code class="java">
+  private class Word {
+    private ArrayList&lt;Word&gt; nextWords;
+    private String word;
+
+    public Word(String w, Word nextWord){
+      word = w;
+      nextWords = new ArrayList&lt;Word&gt;();
+      nextWords.add(nextWord);
+    }
+
+    public void addNextWord(Word w){
+      nextWords.add(w);
+    }
+  }
+
+</code></pre>
+        </section>
+
+        <section>
+         <pre><code class="java">
+  private class Word {
+
+    public Word nextWord(){
+      if(nextWords.size() > 0){
+        Collections.shuffle(nextWords);
+        return nextWords.get(0);
+      }else{
+        return null;
+      }
+    }
+
+    public String toString(){
+      return word;
+    }
+  }
+
+</code></pre>
+        </section>
+
+
+
+
+        <section>
+         <pre><code class="java">
+  private ArrayList&lt;Word&gt; beginnings;
+  private Hashtable&lt;String,Word&gt; words;
+
+  public MarkovChainer(){
+    beginnings = new ArrayList&lt;Word&gt;();
+    words = new Hashtable&lt;String,Word&gt;();
+  }
+
+</code></pre>
+        </section>
+
+        <section>
+         <pre><code class="java">
+  public void train(String s) {
+    String[] swords = s.split(" ");
+    Word previousWord = null;
+    for(int i = swords.length -1; i>=0; i--){
+      Word word = words.get(swords[i]);
+      if(word != null){
+        word.addNextWord(previousWord);
+      }else{
+        word = new Word(swords[i],previousWord);
+        words.put(swords[i],word);
+      }
+      previousWord = word;
+    }
+    beginnings.add(previousWord);
+  }
+
+</code></pre>
+        </section>
+
+        <section>
+         <pre><code class="java">
+  public String generate() {
+    StringJoiner words = new StringJoiner(" ");
+    Collections.shuffle(beginnings);
+    Word word = beginnings.get(0);
+    while(word != null){
+      words.add(word.toString());
+      word = word.nextWord();
+    }
+    String sentence = words.toString();
+    return sentence;
+  }
+
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Finally! 3 passing scenarios!</h3>
+          <h1>:)</h1>
+        </section>
+
+
         <section>
           <h2>Quote Masher<br/>Admin Demo</h2>
           <a href="http://quote-masher.herokuapp.com/admin/accounts">quote-masher.herokuapp.com</a>
